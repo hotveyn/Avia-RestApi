@@ -18,10 +18,10 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(BookingStoreRequest $request)
-    {
-        return response($request->validated());
-    }
+//    public function store(BookingStoreRequest $request)
+//    {
+//        return response($request->validated());
+//    }
 
     public function info(Booking $code)
     {

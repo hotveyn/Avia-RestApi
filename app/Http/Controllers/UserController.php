@@ -52,18 +52,7 @@ class UserController extends Controller
 
     public function bookingsInfo()
     {
-        $userId = auth()->id();
-        $userDoc = User::where("id", $userId)->first()->document_number;
-        $passenger = Passenger::where("document_number", $userDoc)->first();
-
-        return BookingShowUserResource::make($passenger->bookings);
-//        if (auth()->check()) {
-//            $user = auth()->user()->document_number;
-//            return response([
-//                UserResource::collection($user)
-//            ], 200);
-//        } else {
-//            return ResponseService::error("Unauthorized", 401);
-//        }
+        $userPassanger = User::userPassangers();
+        return BookingShowUserResource::make($userPassanger->bookings);
     }
 }
