@@ -28,50 +28,50 @@ class BookingController extends Controller
         return ResponseService::success(BookingShowResource::make($code));
     }
 
+    function isSeatedResponse()
+    {
+        return response([
+            "error" => [
+                "code" => 422,
+                "message" => "Seat is occupied"
+            ]
+        ], 422);
+    }
+
     public function update(BookingUpdateRequest $request, Booking $code)
     {
         $passenger = $code->passengers->where("id", $request->passenger)->first();
         if (is_null($passenger)) {
             return response([
-                    "error" => [
-                        "code" => 403,
-                        "message"=> "Passenger does not apply to booking"
-                    ]
-                ],403);
+                "error" => [
+                    "code" => 403,
+                    "message" => "Passenger does not apply to booking"
+                ]
+            ], 403);
         }
 
         // todo: Вынести в модель
-        if($request->type === "from"){
+        if ($request->type === "from") {
             // Проверка занято ли место
             $isOcuppied = !is_null($code->passengers->where("place_from", $request->seat)->first());
-            if($isOcuppied){
-                return response([
-                    "error" => [
-                        "code" => 422,
-                        "message"=> "Seat is occupied"
-                    ]
-                ],422);
-            }
+            if($isOcuppied) return $this->isSeatedResponse($isOcuppied);
+
             $passenger->update(["place_from" => strtoupper($request->seat)]);
             return ResponseService::success(PassengersResources::make($passenger));
 
-        }else if($request->type === "back"){
+        } else if ($request->type === "back") {
             // Проверка занято ли место
             $isOcuppied = !is_null($code->passengers->where("place_back", $request->seat)->first());
-            if($isOcuppied){
-                return response([
-                    "error" => [
-                        "code" => 422,
-                        "message"=> "Seat is occupied"
-                    ]
-                ],422);
-            }
+            if($isOcuppied) return $this->isSeatedResponse($isOcuppied);
+
             $passenger->update(["place_back" => strtoupper($request->seat)]);
             return ResponseService::success(PassengersResources::make($passenger));
         }
     }
 
-    public function infoSeat(Booking $code){
+
+    public function infoSeat(Booking $code)
+    {
 
 //        return response($code->passengers);
         return BookingShowSeatResource::collection($code->passengers);
