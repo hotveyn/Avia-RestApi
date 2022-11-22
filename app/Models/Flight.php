@@ -9,15 +9,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Flight extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
     public function airportFrom(): BelongsTo
     {
-        return $this->belongsTo(Airport::class,"from_id","id");
+        return $this->belongsTo(Airport::class, "from_id", "id");
     }
+
     public function airportTo(): BelongsTo
     {
-        return $this->belongsTo(Airport::class,"to_id","id");
+        return $this->belongsTo(Airport::class, "to_id", "id");
     }
 
 }

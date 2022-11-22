@@ -27,4 +27,7 @@ Route::get('user', [\App\Http\Controllers\UserController::class, 'info']);
 Route::get('flight', [\App\Http\Controllers\FlightController::class, 'search']);
 Route::post('booking', [\App\Http\Controllers\BookingController::class, 'store']);
 Route::get('booking/{code}', [\App\Http\Controllers\BookingController::class, 'info']);
+Route::patch('booking/{code}/seat', [\App\Http\Controllers\BookingController::class, 'update']);
+Route::get('booking/{code}/seat', [\App\Http\Controllers\BookingController::class, 'infoSeat']);
+Route::patch('user/booking', [\App\Http\Controllers\UserController::class, 'bookingsInfo']);
 
