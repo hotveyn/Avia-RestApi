@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+/**
+ * @property string $phone
+ * @property string $password
+ */
 class UserLoginRequest extends BaseFormRequest
 {
     public function rules()

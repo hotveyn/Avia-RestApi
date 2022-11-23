@@ -10,13 +10,18 @@ class ResponseService
 {
     public static function error(string $message, int $code, mixed $errors = []): Response|Application|ResponseFactory
     {
-        return response([
-            'error' => [
-                'code' => $code,
-                'message' => $message,
-                'errors' => $errors,
-            ]
-        ], $code);
+        $body = [
+            'code' => $code,
+            'message' => $message
+        ];
+
+        if (count($errors)) {
+            $body = array_merge($body, [
+                "errors" => $errors
+            ]);
+        }
+
+        return response(["error" => $body], $code);
     }
 
     public static function success(mixed $data, int $code = 200): Response|Application|ResponseFactory
@@ -26,7 +31,7 @@ class ResponseService
         ], $code);
     }
 
-    public static function created(): Response|Application | ResponseFactory
+    public static function created(): Response|Application|ResponseFactory
     {
         return response(null, 201);
     }
@@ -35,4 +40,5 @@ class ResponseService
     {
         return response(null, 204);
     }
+
 }

@@ -4,6 +4,11 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property string $type
+ * @property string $seat
+ * @property int $passenger
+ */
 class BookingUpdateRequest extends BaseFormRequest
 {
 

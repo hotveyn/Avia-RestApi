@@ -10,17 +10,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Booking extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
-    public function flightFrom():  BelongsTo
+    public function flightFrom(): BelongsTo
     {
         return $this->belongsTo(Flight::class, "flight_from", "id");
     }
-    public function flightBack():  BelongsTo
+
+    public function flightBack(): BelongsTo
     {
         return $this->belongsTo(Flight::class, "flight_back", "id");
     }
-    public function passengers(): HasMany{
-        return $this->hasMany(Passenger::class,"booking_id","id");
+
+    public function passengers(): HasMany
+    {
+        return $this->hasMany(Passenger::class, "booking_id", "id");
     }
 }

@@ -16,6 +16,10 @@ use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
+    /**
+     * @param UserLoginRequest $request
+     * @return Response|Application|ResponseFactory
+     */
     public function login(UserLoginRequest $request): Response|Application|ResponseFactory
     {
         if (auth()->attempt($request->validated())) {
@@ -32,27 +36,35 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * @param UserStoreRequest $request
+     * @return Response|Application|ResponseFactory
+     */
     public function store(UserStoreRequest $request): Response|Application|ResponseFactory
     {
         User::create($request->validated());
         return ResponseService::noContent();
     }
 
+    /**
+     * @return Response|Application|ResponseFactory
+     */
     public function info(): Response|Application|ResponseFactory
     {
         if (auth()->check()) {
-            $user = auth()->user();
             return response([
-                UserResource::collection($user)
+                UserResource::collection(auth()->user())
             ], 200);
         } else {
             return ResponseService::error("Unauthorized", 401);
         }
     }
 
+    /**
+     * @return BookingShowUserResource
+     */
     public function bookingsInfo()
     {
-        $userPassanger = User::userPassangers();
-        return BookingShowUserResource::make($userPassanger->bookings);
+        return BookingShowUserResource::make(User::passengers()->bookings);
     }
 }
