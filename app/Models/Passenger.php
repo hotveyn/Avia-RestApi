@@ -15,6 +15,6 @@ class Passenger extends Model
 
     public function bookings(): BelongsTo
     {
-        return $this->belongsTo(Booking::class, "booking_id", "id");
+        return $this->belongsTo(Booking::class);
     }
 }
