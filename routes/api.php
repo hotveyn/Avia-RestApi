@@ -22,8 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [\App\Http\Controllers\UserController::class, 'login']);
 Route::post('register', [\App\Http\Controllers\UserController::class, 'store']);
 Route::get('airport', [\App\Http\Controllers\AirportController::class, 'search']);
-Route::get('user', [\App\Http\Controllers\UserController::class, 'info']);
-//    ->middleware('auth')
+Route::get('user', [\App\Http\Controllers\UserController::class, 'info'])->middleware("auth:api");
 Route::get('flight', [\App\Http\Controllers\FlightController::class, 'search']);
 //Route::post('booking', [\App\Http\Controllers\BookingController::class, 'store']);
 Route::get('booking/{code}', [\App\Http\Controllers\BookingController::class, 'info']);
