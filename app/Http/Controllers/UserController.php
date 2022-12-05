@@ -51,20 +51,14 @@ class UserController extends Controller
      */
     public function info(): Response|Application|ResponseFactory
     {
-        if (auth()->check()) {
-            return response([
-                UserResource::collection(auth()->user())
-            ], 200);
-        } else {
-            return ResponseService::error("Unauthorized", 401);
-        }
+        return response(["data"=>UserResource::make(auth()->user())], 200);
     }
 
     /**
-     * @return BookingShowUserResource
+     * @return Application|Response|ResponseFactory
      */
     public function bookingsInfo()
     {
-        return BookingShowUserResource::make(User::passengers()->bookings);
+        return response(["data" => User::passenger()]);
     }
 }
